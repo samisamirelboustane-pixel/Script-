@@ -1,45 +1,24 @@
--- LocalScript (StarterPlayerScripts)
+# Brainrot Spawner — All-In-One Script
 
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
+A single Roblox Script that runs both server-side spawning logic and a client-side menu (via RunContext self-clone).
 
--- GUI
-local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
-gui.Name = "SaveTeleportGui"
+## Features
 
--- Save Button
-local saveBtn = Instance.new("TextButton", gui)
-saveBtn.Size = UDim2.new(0,140,0,50)
-saveBtn.Position = UDim2.new(0.1,0,0.8,0)
-saveBtn.Text = "SAVE PLACE"
-saveBtn.TextScaled = true
-saveBtn.BackgroundColor3 = Color3.fromRGB(0,200,0)
+- Server-authoritative spawning (everyone sees spawns)
+- Auto-discovers REAL Brainrot models from CollectionService tags or named folders
+- Toggleable client menu (press **RightControl** to show/hide)
+- Spawn random or by rarity
+- Auto-spawn with configurable interval
+- Weighted rarity system with mutations (Rainbow, Diamond, Gold)
+- Conveyor belt system that moves spawned models
+- Draggable menu window
 
--- Teleport Button
-local tpBtn = Instance.new("TextButton", gui)
-tpBtn.Size = UDim2.new(0,140,0,50)
-tpBtn.Position = UDim2.new(0.55,0,0.8,0)
-tpBtn.Text = "TELEPORT"
-tpBtn.TextScaled = true
-tpBtn.BackgroundColor3 = Color3.fromRGB(0,120,255)
+## Setup
 
-local savedCFrame = nil
+1. Place this as a **Script** in `ServerScriptService` (RunContext = Legacy, the default)
+2. Press Play — the menu appears automatically
+3. Toggle with **RightControl**
 
--- Save current place
-saveBtn.MouseButton1Click:Connect(function()
-	character = player.Character or player.CharacterAdded:Wait()
-	if character:FindFirstChild("HumanoidRootPart") then
-		savedCFrame = character.HumanoidRootPart.CFrame
-		saveBtn.Text = "SAVED!"
-		wait(1)
-		saveBtn.Text = "SAVE PLACE"
-	end
-end)
+## File
 
--- Teleport back
-tpBtn.MouseButton1Click:Connect(function()
-	character = player.Character or player.CharacterAdded:Wait()
-	if savedCFrame and character:FindFirstChild("HumanoidRootPart") then
-		character.HumanoidRootPart.CFrame = savedCFrame
-	end
-end)
+- `BrainrotSpawner.lua` — the complete all-in-one script
